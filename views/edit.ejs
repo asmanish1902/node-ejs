@@ -1,0 +1,84 @@
+<%- include('partials/header', { title: 'Edit User' }) %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit User</h5>
+      </div>
+      <div class="card-body">
+
+        <%- include('partials/alert') %>
+
+        <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value="<%= old.name || user.name %>"
+              class="form-control <%= errors.name ? 'is-invalid' : '' %>"
+            />
+            <% if (errors.name) { %>
+              <div class="invalid-feedback"><%= errors.name %></div>
+            <% } %>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value="<%= old.email || user.email %>"
+              class="form-control <%= errors.email ? 'is-invalid' : '' %>"
+            />
+            <% if (errors.email) { %>
+              <div class="invalid-feedback"><%= errors.email %></div>
+            <% } %>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Role</label>
+            <select name="role" class="form-select <%= errors.role ? 'is-invalid' : '' %>">
+              <% ['Developer', 'Designer', 'Manager', 'Admin'].forEach(r => { %>
+                <option value="<%= r %>"
+                  <%= (old.role || user.role) === r ? 'selected' : '' %>>
+                  <%= r %>
+                </option>
+              <% }) %>
+            </select>
+            <% if (errors.role) { %>
+              <div class="invalid-feedback"><%= errors.role %></div>
+            <% } %>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Status</label>
+            <select name="status" class="form-select <%= errors.status ? 'is-invalid' : '' %>">
+              <% ['Active', 'Inactive'].forEach(s => { %>
+                <option value="<%= s %>"
+                  <%= (old.status || user.status) === s ? 'selected' : '' %>>
+                  <%= s %>
+                </option>
+              <% }) %>
+            </select>
+            <% if (errors.status) { %>
+              <div class="invalid-feedback"><%= errors.status %></div>
+            <% } %>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-warning">
+              <i class="bi bi-save me-1"></i> Update User
+            </button>
+            <a href="/users" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
